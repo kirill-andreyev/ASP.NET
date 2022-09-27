@@ -1,0 +1,43 @@
+﻿@page
+@model NewsForum.Pages.News.Comments.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Comment</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Comment.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Comment.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Comment.Text)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Comment.Text)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Comment.Article)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Comment.Article.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Comment.User)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Comment.User.Role)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Comment?.Id">Edit</a> |
+    <a asp-page="./Index" asp-route-id="@Model.Comment.ArticleId">Back to List</a>
+</div>
