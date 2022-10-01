@@ -1,0 +1,50 @@
+﻿@page
+@model DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Articles</h4>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Article.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Article.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Article.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Article.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Article.CreatedTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Article.CreatedTime)
+        </dd>
+    </dl>
+</div>
+<div>
+    <table class="layui-table">
+        <tbody id="PTb" style="display: block; height: 600px; overflow: auto; width: 400px;">
+        <tr style="display: block">
+            <td style="vertical-align: top">
+                <img src="@await Model._blobStorageService.GetBlob(Model.Article.PathToImage)"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Article?.Id">Edit</a> |
+    <a asp-page="./Comments/Index" asp-route-id="@Model.Article?.Id">Comments</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
