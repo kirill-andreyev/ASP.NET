@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using NewsForum.BusinessLogic.Interfaces.Services;
 using NewsForum.BusinessLogic.Models;
-using NewsForum.Database.Models.Models;
-using NewsForum.Repositories;
 
 namespace NewsForum.Pages.News
 {
@@ -24,10 +16,9 @@ namespace NewsForum.Pages.News
             _articleService = articleService;
         }
 
-        [BindProperty]
-        public ArticleBL Article { get; set; }
+        [BindProperty] public ArticleBL Article { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             if (id == null)
             {
@@ -50,7 +41,5 @@ namespace NewsForum.Pages.News
 
             return RedirectToPage("./Index");
         }
-
-        
     }
 }

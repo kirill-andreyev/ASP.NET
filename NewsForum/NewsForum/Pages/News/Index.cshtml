@@ -1,5 +1,5 @@
 ﻿@page
-@model NewsForum.Pages.News.IndexModel
+@model IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -12,18 +12,19 @@
 </p>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Articles[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Articles[0].CreatedTime)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Articles[0].Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Articles[0].CreatedTime)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Articles) {
+    @foreach (var item in Model.Articles)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
@@ -37,6 +38,6 @@
                 <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

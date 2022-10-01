@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Authentication;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Authentication;
 using Microsoft.EntityFrameworkCore;
 using NewsForum.BusinessLogic.Interfaces.Services;
 using NewsForum.BusinessLogic.Mapping;
@@ -20,6 +15,7 @@ namespace NewsForum.BusinessLogic.Implementations.Services
         {
             _context = context;
         }
+
         public async Task<CommentBL> GetComment(int? id)
         {
             return CommentMapper.MapToBLL(_context.Comments.Include(x => x.User).FirstOrDefault(a => a.Id == id));
@@ -39,6 +35,7 @@ namespace NewsForum.BusinessLogic.Implementations.Services
             {
                 return;
             }
+
             comment.UserId = dbUser.Id;
 
             _context.Comments.Add(CommentMapper.MapToDAL(comment));
@@ -67,8 +64,7 @@ namespace NewsForum.BusinessLogic.Implementations.Services
 
         public async Task<IList<CommentBL>> GetCommentList(int? id)
         {
-            var dbComments = await _context.Comments.Include(x => x.User).Where(x => x.ArticleId == id).ToListAsync();
-            return dbComments.Select(CommentMapper.MapToBLL).ToList();
+            return _context.Comments.Include(x => x.User).Where(x => x.ArticleId == id).Select(CommentMapper.MapToBLL).ToList();
         }
     }
 }

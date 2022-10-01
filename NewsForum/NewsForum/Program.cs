@@ -1,12 +1,6 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using NewsForum.Repositories;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Azure;
 using NewsForum.BusinessLogic;
-using Azure.Storage.Blobs;
-using NewsForum.BusinessLogic.Implementations.Services;
+using NewsForum.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +12,8 @@ builder.Services.AddAuthentication("Cookies").AddCookie(options => options.Login
 builder.Services.AddAuthorization();
 builder.Services.AddAzureClients(clientBuilder =>
 {
-    clientBuilder.AddBlobServiceClient(builder.Configuration["StorageConnectionString:blob"], preferMsi: true);
-    clientBuilder.AddQueueServiceClient(builder.Configuration["StorageConnectionString:queue"], preferMsi: true);
+    clientBuilder.AddBlobServiceClient(builder.Configuration["StorageConnectionString:blob"], true);
+    clientBuilder.AddQueueServiceClient(builder.Configuration["StorageConnectionString:queue"], true);
 });
 
 

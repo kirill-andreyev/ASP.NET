@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using Azure.Storage.Blobs;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NewsForum.BusinessLogic.Interfaces.Services;
 using NewsForum.BusinessLogic.Models;
@@ -19,7 +17,8 @@ namespace NewsForum.Pages.News
         }
 
         public ArticleBL Article { get; set; }
-        public async Task<IActionResult> OnGetAsync(int? id)
+
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             Article = await _articleService.GetArticle(id);
 
@@ -27,7 +26,7 @@ namespace NewsForum.Pages.News
             {
                 return NotFound();
             }
-            
+
             return Page();
         }
     }

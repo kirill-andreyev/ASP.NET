@@ -8,11 +8,11 @@
 <h1>Create</h1>
 
 <h4>Comment</h4>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            <input type="hidden" asp-for="Comment.ArticleId" />
+            <input type="hidden" asp-for="Comment.ArticleId"/>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Comment.Title" class="control-label"></label>
@@ -36,5 +36,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using NewsForum.BusinessLogic.Interfaces.Services;
 using NewsForum.BusinessLogic.Models;
-using NewsForum.Database.Models.Models;
-using NewsForum.Repositories;
 
 namespace NewsForum.Pages.News.Comments
 {
@@ -38,21 +31,14 @@ namespace NewsForum.Pages.News.Comments
             {
                 return NotFound();
             }
-            else
-            {
-                Comment = comment;
-            }
+
+            Comment = comment;
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            if (HttpContext.User.Identity.Name == Comment.User.Name || HttpContext.User.IsInRole("admin"))
+            if (HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value == Comment.UserId.ToString() || HttpContext.User.IsInRole("admin"))
             {
                 await _commentService.DeleteComment(id);
             }
@@ -61,7 +47,7 @@ namespace NewsForum.Pages.News.Comments
                 return RedirectToPage("./WrongUser");
             }
 
-            return RedirectToPage($"./Index", new { id = Comment.ArticleId });
+            return RedirectToPage("./Index", new { id = Comment.ArticleId });
         }
     }
 }

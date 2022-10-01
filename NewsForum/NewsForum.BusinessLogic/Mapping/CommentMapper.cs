@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NewsForum.BusinessLogic.Implementations.Services;
-using NewsForum.BusinessLogic.Interfaces.Services;
-using NewsForum.BusinessLogic.Models;
+﻿using NewsForum.BusinessLogic.Models;
 using NewsForum.Database.Models.Models;
 
 namespace NewsForum.BusinessLogic.Mapping
@@ -19,14 +12,14 @@ namespace NewsForum.BusinessLogic.Mapping
                 throw new ArgumentNullException(nameof(comment));
             }
 
-            return new CommentBL()
+            return new CommentBL
             {
                 Id = comment.Id,
                 Title = comment.Title,
                 Text = comment.Text,
                 ArticleId = comment.ArticleId,
                 UserId = comment.UserId,
-                User = new UserBL()
+                User = new UserBL
                 {
                     Name = comment.User.Name
                 }
@@ -40,7 +33,7 @@ namespace NewsForum.BusinessLogic.Mapping
                 throw new ArgumentNullException(nameof(comment));
             }
 
-            return new Comment()
+            return new Comment
             {
                 Id = comment.Id,
                 Title = comment.Title,

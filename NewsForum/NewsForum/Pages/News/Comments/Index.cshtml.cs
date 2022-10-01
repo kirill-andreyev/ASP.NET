@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using NewsForum.BusinessLogic.Interfaces.Services;
 using NewsForum.BusinessLogic.Models;
-using NewsForum.Database.Models.Models;
 
 namespace NewsForum.Pages.News.Comments
 {
@@ -9,12 +8,12 @@ namespace NewsForum.Pages.News.Comments
     {
         private readonly ICommentService _commentService;
 
-        internal IList<CommentBL> Comment { get; set; }
-
         public IndexModel(ICommentService commentService)
         {
             _commentService = commentService;
         }
+
+        internal IList<CommentBL> Comment { get; set; }
 
         public async Task OnGetAsync(int? id)
         {

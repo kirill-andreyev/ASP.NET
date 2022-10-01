@@ -18,17 +18,17 @@ namespace NewsForum.Pages.News
             _blobStorageService = blobStorageService;
         }
 
+        [BindProperty] public ArticleBL Article { get; set; }
+
         public IActionResult OnGet()
         {
             return Page();
         }
 
-        [BindProperty] public ArticleBL Article { get; set; }
-
 
         public async Task<IActionResult> OnPostAsync()
         {
-            IFormFileCollection files = Request.Form.Files;
+            var files = Request.Form.Files;
             var file = files[0];
             var stream = file.OpenReadStream();
 

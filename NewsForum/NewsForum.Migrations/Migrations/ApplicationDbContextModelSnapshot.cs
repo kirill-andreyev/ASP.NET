@@ -17,7 +17,7 @@ namespace NewsForum.Migrations.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -97,6 +97,15 @@ namespace NewsForum.Migrations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "admin",
+                            Password = "4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2",
+                            Role = "admin"
+                        });
                 });
 
             modelBuilder.Entity("NewsForum.Database.Models.Models.Comment", b =>

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NewsForum.BusinessLogic.Models;
+﻿using NewsForum.BusinessLogic.Models;
 
 namespace NewsForum.BusinessLogic.Interfaces.Services
 {

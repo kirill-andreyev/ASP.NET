@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NewsForum.BusinessLogic.Models;
+﻿using NewsForum.BusinessLogic.Models;
 using NewsForum.Database.Models.Models;
 
 namespace NewsForum.BusinessLogic.Mapping
@@ -12,11 +7,11 @@ namespace NewsForum.BusinessLogic.Mapping
     {
         public static Article MapToDAL(ArticleBL articleBl, DateTime? createdTime = null)
         {
-            return new Article()
+            return new Article
             {
                 Id = articleBl.Id,
-                Description = articleBl.Description, 
-                CreatedTime = createdTime ?? DateTime.UtcNow, 
+                Description = articleBl.Description,
+                CreatedTime = createdTime ?? DateTime.UtcNow,
                 PathToImage = articleBl.PathToImage,
                 Title = articleBl.Title
             };
@@ -28,8 +23,8 @@ namespace NewsForum.BusinessLogic.Mapping
             {
                 throw new ArgumentNullException(nameof(article));
             }
-            
-            return new ArticleBL()
+
+            return new ArticleBL
             {
                 Id = article.Id,
                 Description = article.Description,

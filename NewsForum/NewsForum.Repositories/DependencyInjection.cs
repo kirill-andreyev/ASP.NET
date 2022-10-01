@@ -10,7 +10,8 @@ namespace NewsForum.Repositories
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(connectionString, x => x.MigrationsAssembly(ConstantsStrings.MigrationsAssemblyName));
+                options.UseSqlServer(connectionString,
+                    x => x.MigrationsAssembly(ConstantsStrings.MigrationsAssemblyName));
             });
 
             return services;

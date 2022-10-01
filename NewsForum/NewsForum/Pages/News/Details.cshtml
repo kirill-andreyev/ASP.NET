@@ -1,5 +1,5 @@
 ﻿@page
-@model NewsForum.Pages.News.DetailsModel
+@model DetailsModel
 
 @{
     ViewData["Title"] = "Details";
@@ -9,7 +9,7 @@
 
 <div>
     <h4>Articles</h4>
-    <hr />
+    <hr/>
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Article.Title)
@@ -33,9 +33,11 @@
 </div>
 <div>
     <table class="layui-table">
-        <tbody id="PTb" style="display: block;height: 600px;width:400px;overflow: auto">
-        <tr style="display:block">
-            <td style="vertical-align:top"><img src="@await Model._blobStorageService.GetBlob(Model.Article.PathToImage)" /></td>
+        <tbody id="PTb" style="display: block; height: 600px; overflow: auto; width: 400px;">
+        <tr style="display: block">
+            <td style="vertical-align: top">
+                <img src="@await Model._blobStorageService.GetBlob(Model.Article.PathToImage)"/>
+            </td>
         </tr>
         </tbody>
     </table>

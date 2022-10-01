@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NewsForum.BusinessLogic.Interfaces.Services;
 using NewsForum.BusinessLogic.Models;
-using NewsForum.Database.Models.Models;
 
 namespace NewsForum.Pages.News.Comments
 {
@@ -17,6 +16,8 @@ namespace NewsForum.Pages.News.Comments
             _commentService = commentService;
         }
 
+        [BindProperty] public CommentBL Comment { get; set; }
+
         public IActionResult OnGet(int id)
         {
             Comment = new CommentBL
@@ -26,13 +27,9 @@ namespace NewsForum.Pages.News.Comments
             return Page();
         }
 
-        [BindProperty] public CommentBL Comment { get; set; }
-
 
         public async Task<IActionResult> OnPostAsync()
         {
-
-
             Comment.User = new UserBL();
             Comment.User.Name = HttpContext.User.Identity.Name;
             if (!ModelState.IsValid)
@@ -41,10 +38,7 @@ namespace NewsForum.Pages.News.Comments
             }
 
             await _commentService.CreateComment(Comment);
-            int id;
-            return RedirectToPage($"./Index", new {id = Comment.ArticleId});
-
+            return RedirectToPage("./Index", new { id = Comment.ArticleId });
         }
     }
 }
-

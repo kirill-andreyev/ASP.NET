@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using NewsForum.BusinessLogic.Interfaces.Services;
+using NewsForum.BusinessLogic.Models;
 using NewsForum.Database.Models.Models;
 using NewsForum.Repositories;
 
@@ -12,31 +10,21 @@ namespace NewsForum.Pages.News.Comments
 {
     public class DetailsModel : PageModel
     {
-        private readonly NewsForum.Repositories.ApplicationDbContext _context;
+        private readonly ICommentService _commentService;
 
-        public DetailsModel(NewsForum.Repositories.ApplicationDbContext context)
+        public DetailsModel(ICommentService commentService)
         {
-            _context = context;
+            _commentService = commentService;
         }
 
-      public Comment Comment { get; set; } = default!; 
+        public CommentBL Comment { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Comments == null)
-            {
-                return NotFound();
-            }
 
-            var comment = await _context.Comments.FirstOrDefaultAsync(m => m.Id == id);
-            if (comment == null)
-            {
-                return NotFound();
-            }
-            else 
-            {
-                Comment = comment;
-            }
+            var comment = await _commentService.GetComment(id);
+
+            Comment = comment;
             return Page();
         }
     }

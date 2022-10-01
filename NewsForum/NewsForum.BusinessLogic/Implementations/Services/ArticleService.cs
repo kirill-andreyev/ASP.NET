@@ -2,7 +2,6 @@
 using NewsForum.BusinessLogic.Interfaces.Services;
 using NewsForum.BusinessLogic.Mapping;
 using NewsForum.BusinessLogic.Models;
-using NewsForum.Database.Models.Models;
 using NewsForum.Repositories;
 
 namespace NewsForum.BusinessLogic.Implementations.Services
@@ -18,25 +17,26 @@ namespace NewsForum.BusinessLogic.Implementations.Services
 
         public async Task<IList<ArticleBL>> GetArticleList()
         {
-            var articlesDb = await _context.Articles.ToListAsync();
-            return articlesDb.Select(ArticleMapper.MapToBLL).ToList();
+            // var articlesDb = await _context.Articles.ToListAsync();
+            return _context.Articles.Select(ArticleMapper.MapToBLL).ToList();
         }
 
-        public async Task CreateArticle(ArticleBL article)
+        public async Task<int> CreateArticle(ArticleBL article)
         {
-            _context.Articles.Add(ArticleMapper.MapToDAL(article));
+            var entity = await _context.Articles.AddAsync(ArticleMapper.MapToDAL(article));
             await _context.SaveChangesAsync();
+            return entity.Entity.Id;
         }
 
         public async Task UpdateArticle(ArticleBL article)
         {
-            var dbArticle = _context.Articles.FirstOrDefault(x => x.Id == article.Id);
+            var dbArticle = await _context.Articles.FirstOrDefaultAsync(x => x.Id == article.Id);
 
             if (dbArticle == null)
             {
-                return;
+                throw new Exception("Article doesn't exist");
             }
-            
+
             dbArticle.CreatedTime = DateTime.UtcNow;
             dbArticle.Description = article.Description;
             dbArticle.Title = article.Title;
@@ -45,14 +45,27 @@ namespace NewsForum.BusinessLogic.Implementations.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ArticleBL> GetArticle(int? id)
+        public async Task<ArticleBL> GetArticle(int id)
         {
-           return ArticleMapper.MapToBLL(_context.Articles.FirstOrDefault(a => a.Id == id));
+            var article = await _context.Articles.FirstOrDefaultAsync(a => a.Id == id);
+
+            if (article == null)
+            {
+                throw new Exception("Article doesn't exist");
+            }
+
+            return ArticleMapper.MapToBLL(article);
         }
 
         public async Task DeleteArticle(int? id)
         {
             var article = _context.Articles.FirstOrDefault(x => x.Id == id);
+
+            if (article == null)
+            {
+                throw new Exception("Article doesn't exist");
+            }
+
             _context.Articles.Remove(article);
             await _context.SaveChangesAsync();
         }

@@ -3,30 +3,29 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Queues;
 using Microsoft.Extensions.Azure;
 
-namespace NewsForum.BusinessLogic;
-
-public static class AzureClientFactoryBuilderExtensions
+namespace NewsForum.BusinessLogic
 {
-    public static IAzureClientBuilder<BlobServiceClient, BlobClientOptions> AddBlobServiceClient(this AzureClientFactoryBuilder builder, string serviceUriOrConnectionString, bool preferMsi)
+    public static class AzureClientFactoryBuilderExtensions
     {
-        if (preferMsi && Uri.TryCreate(serviceUriOrConnectionString, UriKind.Absolute, out Uri? serviceUri))
+        public static IAzureClientBuilder<BlobServiceClient, BlobClientOptions> AddBlobServiceClient(
+            this AzureClientFactoryBuilder builder, string serviceUriOrConnectionString, bool preferMsi)
         {
-            return builder.AddBlobServiceClient(serviceUri);
-        }
-        else
-        {
+            if (preferMsi && Uri.TryCreate(serviceUriOrConnectionString, UriKind.Absolute, out var serviceUri))
+            {
+                return builder.AddBlobServiceClient(serviceUri);
+            }
+
             return builder.AddBlobServiceClient(serviceUriOrConnectionString);
         }
-    }
 
-    public static IAzureClientBuilder<QueueServiceClient, QueueClientOptions> AddQueueServiceClient(this AzureClientFactoryBuilder builder, string serviceUriOrConnectionString, bool preferMsi)
-    {
-        if (preferMsi && Uri.TryCreate(serviceUriOrConnectionString, UriKind.Absolute, out Uri? serviceUri))
+        public static IAzureClientBuilder<QueueServiceClient, QueueClientOptions> AddQueueServiceClient(
+            this AzureClientFactoryBuilder builder, string serviceUriOrConnectionString, bool preferMsi)
         {
-            return builder.AddQueueServiceClient(serviceUri);
-        }
-        else
-        {
+            if (preferMsi && Uri.TryCreate(serviceUriOrConnectionString, UriKind.Absolute, out var serviceUri))
+            {
+                return builder.AddQueueServiceClient(serviceUri);
+            }
+
             return builder.AddQueueServiceClient(serviceUriOrConnectionString);
         }
     }
